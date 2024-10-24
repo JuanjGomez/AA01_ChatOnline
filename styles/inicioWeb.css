@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-around;
+}
+.column {
+    width: 30%;
+    padding: 10px;
+}
+.column h2 {
+    text-align: center;
+}
+.column input, .column button, .column ul {
+    width: 100%;
+    margin: 5px 0;
+}
+.column ul {
+    list-style-type: none;
+    padding: 0;
+}
+.column ul li {
+    padding: 8px;
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.column ul li button {
+    margin-left: 10px;
+}

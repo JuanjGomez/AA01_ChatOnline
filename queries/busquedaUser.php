@@ -12,14 +12,19 @@
             try{
             $busqueda = mysqli_real_escape_string($conector, trim($_POST['busqueda']));
             $id_inicio = $_SESSION['id'];
-            $sqlBuscar = "SELECT u_id, u_username, u_name_real 
-            FROM tbl_usuarios 
-            WHERE (u_username LIKE CONCAT('%', ?, '%') 
-            OR u_name_real LIKE CONCAT('%', ?, '%')) 
-            AND u_id != ?";
+            $sqlBuscar = "SELECT u.u_id, u.u_username, u.u_name_real 
+                        FROM tbl_usuarios u
+                        WHERE (u.u_username LIKE CONCAT('%', ?, '%') OR u.u_name_real LIKE CONCAT('%', ?, '%')) 
+                            AND u.u_id != ? 
+                            AND u.u_id NOT IN (SELECT CASE 
+                                    WHEN a.u_usuario_uno = ? THEN a.u_usuario_dos 
+                                    ELSE a.u_usuario_uno 
+                                END AS amigo_id
+                                FROM tbl_amistad a
+                                WHERE a.u_usuario_uno = ? OR a.u_usuario_dos = ?);";
             $stmt = mysqli_stmt_init($conector);
             mysqli_stmt_prepare($stmt, $sqlBuscar);
-            mysqli_stmt_bind_param($stmt, "ssi", $busqueda, $busqueda, $id_inicio);
+            mysqli_stmt_bind_param($stmt, "ssiiii", $busqueda, $busqueda, $id_inicio, $id_inicio, $id_inicio, $id_inicio);
             mysqli_stmt_execute($stmt);
             $resultBuscar = mysqli_stmt_get_result($stmt);
             if(mysqli_num_rows($resultBuscar) > 0){
@@ -34,11 +39,11 @@
                     echo "</form>";
                     echo "</div><br>";
                 }
+                mysqli_stmt_close($stmt);
+                mysqli_close($conector);
             } else {
                 echo "<p>No se encontraron resultados.</p>";
             }
-            mysqli_stmt_close($stmt);
-            mysqli_close($conector);
             } catch(Exception $e){
                 echo "Error: ". $e->getMessage();
                 die();

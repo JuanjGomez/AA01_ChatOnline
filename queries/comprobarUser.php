@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST'){
             if(password_verify($pwd, $datos['u_contrasena'])){
                 session_start();
                 $_SESSION['id'] = $datos['u_id'];
+                $_SESSION['username'] = $datos['u_username'];
+                $_SESSION['success'] = true;
                 mysqli_stmt_close($stmt);
                 mysqli_close($conector);
                 header('Location: ../actions/principal.php');

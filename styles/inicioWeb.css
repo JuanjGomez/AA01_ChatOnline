@@ -1,29 +1,101 @@
+/* Estilos Generales */
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
+
+h2 {
+    color: #333;
+}
+
+/* Estilos para las columnas */
 .column {
-    width: 30%;
-    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    flex: 1;
 }
-.column h2 {
-    text-align: center;
-}
-.column input, .column button, .column ul {
-    width: 100%;
-    margin: 5px 0;
-}
-.column ul {
-    list-style-type: none;
+
+/* Estilos de lista */
+ul {
+    list-style: none;
     padding: 0;
 }
-.column ul li {
-    padding: 8px;
-    background-color: #f2f2f2;
-    margin-bottom: 5px;
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para botones */
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4cae4c;
+}
+
+/* Estilo para los enlaces */
+a {
+    text-decoration: none;
+    color: #337ab7;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formulario de búsqueda */
+#searchForm {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
-.column ul li button {
-    margin-left: 10px;
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .column {
+        margin: 10px 0;
+    }
+
+    #searchForm {
+        flex-direction: column;
+    }
+
+    #searchInput {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    button {
+        padding: 8px 12px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
 }

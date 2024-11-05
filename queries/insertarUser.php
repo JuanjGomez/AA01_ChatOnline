@@ -7,6 +7,7 @@
         session_start();
         try {
             // Captura de datos del formulario
+            $_SESSION['username'] = htmlspecialchars($_POST['usuario']);
             $user = mysqli_real_escape_string($conector, $_POST['usuario']);
             $name_real = mysqli_real_escape_string($conector, $_POST['nombre']);
             $email = mysqli_real_escape_string($conector, $_POST['email']);
@@ -22,6 +23,7 @@
             mysqli_close($conector);
             session_start();
             $_SESSION['id'] = $lastid;
+            $_SESSION['success'] = true;
             header('Location: ../actions/principal.php');
             exit();
         } catch(Exception $e) {

@@ -12,8 +12,10 @@
             try{
                 $id_envia = $_SESSION['id'];
                 $id_recibe = mysqli_real_escape_string($conector, trim($_POST['usuario_recibe']));
-                $sqlVerificar = "SELECT * FROM tbl_solicitud_amistad WHERE (u_usario_envia = ? AND u_usuario_recibe = ?) 
-                OR (u_usario_envia = ? AND u_usuario_recibe =?);";
+                // Verifica si ya existe una solicitud de amistad entre los dos usuarios
+                $sqlVerificar = "SELECT * FROM tbl_solicitud_amistad 
+                WHERE (u_usuario_envia = ? AND u_usuario_recibe = ?) 
+                OR (u_usuario_envia = ? AND u_usuario_recibe = ?);";
                 $stmtVerificar = mysqli_stmt_init($conector);
                 mysqli_stmt_prepare($stmtVerificar, $sqlVerificar);
                 mysqli_stmt_bind_param($stmtVerificar, "ssss", $id_envia, $id_recibe, $id_recibe, $id_envia);
@@ -23,6 +25,7 @@
                     header('Location:../actions/principal.php?error=11');
                     exit();
                 }
+                // Si no hay solicitud de amistad, se crea una nueva
                 $sqlInsertAmistad = "INSERT INTO tbl_solicitud_amistad (u_usuario_envia, u_usuario_recibe, sa_estado) VALUES 
                 (?,?,'Pendiente');";
                 $stmtInsertAmistad = mysqli_stmt_init($conector);

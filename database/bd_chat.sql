@@ -33,8 +33,7 @@ create table tbl_amistad (
 -- Esta tabla relaciona a los usuarios para establecer un chat
 create table tbl_chats (
     c_id int auto_increment not null primary key,
-    u_usuario_uno int not null,
-    u_usuario_dos int not null,
+    a_amistad int not null,
     c_fecha timestamp default CURRENT_TIMESTAMP
 );
 
@@ -66,14 +65,10 @@ alter table  tbl_amistad
     add constraint fk_amistad_usuario_dos
     foreign key (u_usuario_dos) references tbl_usuarios(u_id);
     
--- Relación entre tbl_chats y tbl_usuarios (chats establecidos)
-alter table  tbl_chats
-    add constraint fk_chats_usuario_uno
-    foreign key (u_usuario_uno) references tbl_usuarios(u_id);
-    
-alter table  tbl_chats
-    add constraint fk_chats_usuario_dos
-    foreign key (u_usuario_dos) references tbl_usuarios(u_id);
+-- Relación entre tbl_chats y tbl_amistad (solo se puede crear un chat para una amistad)
+alter table tbl_chats
+    ADD CONSTRAINT fk_chat_amistad
+    FOREIGN KEY (a_amistad) REFERENCES tbl_amistad(a_id);
     
 -- Relación entre tbl_mensajes y tbl_chats (mensajes del chat)
 alter table  tbl_mensajes
@@ -83,4 +78,3 @@ alter table  tbl_mensajes
 alter table  tbl_mensajes
     add constraint fk_mensajes_envio
     foreign key (u_envio) references tbl_usuarios(u_id);
-    
